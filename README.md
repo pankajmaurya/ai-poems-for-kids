@@ -10,10 +10,6 @@ Make sure to fix your api keys in 2 places
 Pankajs-MacBook-Pro:pythonanywhere pankaj$ flask --app flask_app run
 ```
 
-# Deployment to pythonanywhere.com server
-0. Copy all code to server
-2. Make LOCAL=False in flask_app.py
-
 Check Health
 ```
 curl http://localhost:5000/healthz
