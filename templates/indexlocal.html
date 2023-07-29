@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Code Analysis</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#submitBtn').click(function() {
+        var code = $('#codeTextArea').val();
+
+        // Send the code to the server
+        $.ajax({
+          url: 'http://127.0.0.1:5000/analyze',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({ 'code': code }),
+          success: function(response) {
+            // Render the response hints
+            $('#hintsDiv').empty();
+            response.hints.forEach(function(hint) {
+              $('#hintsDiv').append('<p>' + hint + '</p>');
+            });
+          },
+          error: function(xhr, status, error) {
+            console.error('Error:', error);
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Code Analysis</h1>
+  <textarea id="codeTextArea" rows="10" cols="50"></textarea>
+  <br>
+  <button id="submitBtn">Submit</button>
+  <div id="hintsDiv"></div>
+</body>
+</html>
+

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Code Analysis</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#submitBtn').click(function() {
+        var code = $('#codeTextArea').val();
+
+        // Send the code to the server
+        $.ajax({
+          url: 'http://127.0.0.1:5000/analyzekids',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({ 'code': code }),
+          success: function(response) {
+            // Render the response hints
+            $('#hintsDiv').empty();
+            response.hints.forEach(function(hint) {
+              $('#hintsDiv').append(hint);
+            });
+          },
+          error: function(xhr, status, error) {
+            console.error('Error:', error);
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Kids can ask their questions here</h1>
+  <textarea id="codeTextArea" rows="10" cols="50"></textarea>
+  <br>
+  <button id="submitBtn">Ask Now</button>
+  <div id="hintsDiv"></div>
+  <button id="convertButton">Listen Now</button>
+  <audio id="audioPlayer"></audio>
+  <script src="{{url_for('static', filename='listen.js')}}"></script>
+</body>
+</html>
+
